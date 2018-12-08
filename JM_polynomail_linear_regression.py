@@ -60,10 +60,10 @@ X_grid = X_grid.reshape(len(X_grid), 1)
 plt.scatter(X, y, color = "red")
 plt.plot(X_grid, linReg2.predict(polReg.fit_transform(X_grid)), color = "blue")
 plt.title("Polynomial Prediction")
-plt.show()
+#plt.show()
 
 # Predict a new result with Lienar Regression
-linReg.predict(6.5)
+print(linReg.predict([[6.5]]))
 
 # Predict a new result with Polynomial Regression
-linReg2.predict(polReg.fit_transform(6.5))
+print(linReg2.predict(polReg.fit_transform([[1]])))

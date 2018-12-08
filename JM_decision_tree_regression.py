@@ -41,7 +41,7 @@ regressor.fit(X,y)
 
 
 # Predict a new result
-y_pred = regressor.predict(6.5)
+#y_pred = regressor.predict(6.5)
 
 
 # Visualising the Decision Tree Regression prediction (higher resolution and smoother curve)
