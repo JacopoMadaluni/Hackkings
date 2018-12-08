@@ -68,6 +68,7 @@ class Regressor:
             print(col)
 
 
+
 # Feature Scaling
     def feature_scale(self):
         from sklearn.preprocessing import StandardScaler

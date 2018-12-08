@@ -35,6 +35,16 @@ class SVRRegressor(Regressor):
         #return self.sc_y.inverse_transform(y_pred)
         return self.current_result
 
+    def get_average_error(self):
+        self.train()
+        error = 0
+        count = 0
+        for i, e in enumerate(self.X_test):
+            prediction = self.predict([*e])
+            error += abs(prediction - self.y_test[i])
+            count += 1
+        return error/count    
+
     def plot(self):
         def plot(self):
             if len(self.current_test) == 0 or len(self.current_result) == 0:

@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from RandomForestRegressor import RandomForestRegressor
 
 
 
@@ -30,13 +31,17 @@ def UploadAction(event=None):
     print('Selected:', file)
 
 def quit():
-        root.destroy()
+    root.destroy()
+
+def test_plot():
+    regressor = RandomForestRegressor("Salary_Data.csv", 1)
+    regressor.train()
+    regressor.predict([1],[2],[3])
+    return regressor.plot()
 
 def plot():
-    getPlot();
     print("Plotting")
-    f = plt.Figure(figsize=(5,5), dpi=100)
-    plot = FigureCanvasTkAgg(f, main)
+    plot = FigureCanvasTkAgg(test_plot(), main)
     plot.get_tk_widget().pack()
 
 window = PanedWindow(orient=HORIZONTAL)
@@ -116,7 +121,7 @@ predictButton = Button(navbar, text="Predict", bg=cButtons, fg="white", borderwi
 predictButton.config(font = font)
 predictButton.place(x= 50, y=14)
 
-plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0)
+plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0, command = plot)
 plotButton.config(font = font)
 plotButton.place(x= 150, y=14)
 
