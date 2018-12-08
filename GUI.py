@@ -1,8 +1,11 @@
 from tkinter import *
 
 from tkinter import filedialog
-#import tkFont
 
+import matplotlib.pyplot as plt
+
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 
@@ -28,6 +31,13 @@ def UploadAction(event=None):
 
 def quit():
         root.destroy()
+
+def plot():
+    getPlot();
+    print("Plotting")
+    f = plt.Figure(figsize=(5,5), dpi=100)
+    plot = FigureCanvasTkAgg(f, main)
+    plot.get_tk_widget().pack()
 
 window = PanedWindow(orient=HORIZONTAL)
 window.config(bg = "Black")
@@ -112,6 +122,7 @@ plotButton.place(x= 150, y=14)
 
 main = PanedWindow()
 main.config(bg = cBackground)
+
 
 
 
