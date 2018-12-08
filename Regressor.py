@@ -69,36 +69,20 @@ class Regressor:
 
 
 # Feature Scaling
-    def feature_scale():
+    def feature_scale(self):
         from sklearn.preprocessing import StandardScaler
         sc_X = StandardScaler()
-        self.X_train = sc_X.fit_transform(X_train)
-        self.X_test = sc_X.transform(X_test)
+        self.X_train = sc_X.fit_transform(self.X_train)
+        self.X_test = sc_X.transform(self.X_test)
         self.sc_y = StandardScaler()
-        self.y_train = sc_y.fit_transform(y_train)
+        self.y_train = sc_y.fit_transform(self.y_train)
 
 
 # Fitting Decision Tree Regression  to the dataset
 
-    def train(self):
-        from sklearn.tree import DecisionTreeRegressor
-        self.regressor = DecisionTreeRegressor( splitter = "best", random_state = 42)
-        self.regressor.fit(self.X,self.y)
-
-    def train_best(self):
-        from sklearn.preprocessing import PolynomialFeatures
-        from sklearn.linear_model import LinearRegression
-        polReg = PolynomialFeatures(degree = 4)
-        X_poly = polReg.fit_transform(self.X)
-
-        self.regressor = LinearRegression()
-        self.regressor.fit(X_poly, self.y)
-
-    def predict(self, *args, **kwargs):
-        return self.regressor.predict(args)
 
     def plot(self):
-        
+
         X_grid = np.arange(min(self.X), max(self.X), 0.01)
         X_grid = X_grid.reshape(len(X_grid), 1)
         print( self.regressor.predict(X_grid))

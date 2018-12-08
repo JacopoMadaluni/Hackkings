@@ -37,6 +37,13 @@ class PolynomialLinearRegressor(Regressor):
         plt.ylabel("y label pls")
         plt.show()
 
+    def plot_initial_regression(self):
+        test = [_ for _ in self.X]
+        for i in test:
+            print(i)
+        self.predict(*test)
+        self.plot()
+
 
         #print("X = {}\n Y = {}".format(len(self.X), len(self.y)))
 
