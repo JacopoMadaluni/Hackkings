@@ -19,6 +19,7 @@ class Reader:
         self.name = name
         self.dataset = self.load_file()
         self.headers_dict = defaultdict(str)
+        self.get_headers()
         """print(self.dataset)
         self.encode_dict = defaultdict(list)
         self.encode_strings()
@@ -37,7 +38,17 @@ class Reader:
         for header in self.dataset.head(0):
             self.headers_dict[i] = header
             i += 1
-        return self.headers_dict
+
+    def get_headers_names(self):
+        #print(self.headers_dict)
+        #print(self)
+        return list(self.headers_dict.values())
+
+    def get_header_col(self, name):
+        for number, names in self.headers_dict.items():
+            if names == name:
+                return number
+        return -1
 
     def process_headers(self):
         headers = self.get_headers()
@@ -120,3 +131,7 @@ class Reader:
 
     def get_x_matrix(self):
         return self.x_matrix
+
+some = Reader("50_Startups.csv")
+print(some.headers_dict)
+print(some.get_headers_names())
