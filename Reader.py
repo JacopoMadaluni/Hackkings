@@ -40,8 +40,6 @@ class Reader:
             i += 1
 
     def get_headers_names(self):
-        #print(self.headers_dict)
-        #print(self)
         return list(self.headers_dict.values())
 
     def get_header_col(self, name):
