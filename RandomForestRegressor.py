@@ -7,7 +7,7 @@ class RandomForestRegressor(Regressor):
 
     def __init__(self, database, y_index, header=False):
         super(RandomForestRegressor, self).__init__(database, y_index, header)
-
+        self.name = "Random Forest Regressor"
 
     def train(self):
         from sklearn.ensemble import RandomForestRegressor

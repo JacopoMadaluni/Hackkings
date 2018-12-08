@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from RandomForestRegressor import RandomForestRegressor
+from Controller import Controller
 
 
 
@@ -25,19 +26,35 @@ root.geometry("900x550+0+0")
 root.resizable(0,0)
 
 filename = StringVar()
+controller = Controller()
+regressor = None
+
 def UploadAction(event=None):
     file = filedialog.askopenfilename()
     filename.set(file)
     print('Selected:', file)
+    controller.set_file(file)
+    controller.set_y_index(1)
 
 def quit():
     root.destroy()
 
+def set_best_regressor():
+    global regressor
+    regressor = controller.get_best_regressor()
+    print("regressor name = {}".format(regressor.name))
+    if regressor is None:
+        print("diocane")
+        # display error plot
+        pass
+
+
 def test_plot():
-    regressor = RandomForestRegressor("Salary_Data.csv", 1)
-    regressor.train()
-    regressor.predict([1],[2],[3])
-    return regressor.plot()
+    if regressor:
+        regressor.train()
+        regressor.predict([1],[2],[3],[4],[5],[6],[7],[8],[9], [10],[11])
+        print(regressor.name)
+        return regressor.plot()
 
 def plot():
     print("Plotting")
@@ -83,12 +100,13 @@ popupMenu = OptionMenu(leftMenu, tkvar, *choices,).place(x= 60, y= 260)
 
 # on change dropdown value
 def change_dropdown(*args):
+    #controller.set_y_index(dic.get(tkvar.get))
     print( tkvar.get() )
 
 # link function to change dropdown
 tkvar.trace('w', change_dropdown)
 
-startButton = Button(leftMenu, text="Start", bg=cButtons, fg="white", borderwidth=0)
+startButton = Button(leftMenu, text="Start", bg=cButtons, fg="white", borderwidth=0, command=set_best_regressor)
 startButton.place(x= 60, y= 400)
 startButton.config(font = font)
 #startButton.pack(padx=5, pady=5)

@@ -10,6 +10,7 @@ class DecisionTreeRegressor(Regressor):
         from sklearn.tree import DecisionTreeRegressor as DTR
         self.regressor = DTR( splitter = "best", random_state = 42)
         self.regressor.fit(self.X_train,self.y_train)
+        self.name = "Decision Tree Regressor"
 
 
     def predict(self, *args, **kwargs):

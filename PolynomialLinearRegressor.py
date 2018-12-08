@@ -7,6 +7,7 @@ class PolynomialLinearRegressor(Regressor):
     def __init__(self, dataset, y_index, header=False):
         super(PolynomialLinearRegressor, self).__init__(dataset, y_index)
         self.pol_reg = None
+        self.name = "Polynomial Linear Regressor"
 
 
     def train(self):
@@ -40,7 +41,9 @@ class PolynomialLinearRegressor(Regressor):
         print(self.current_test)
         if len(self.current_test[0]) > 1:
             print("YO, Can't plot multivariable dataset!")
-            return
+            fig = Figure(figsize=(10, 10), dpi=100)
+            plt = fig.add_subplot(111)
+            return fig
         fig = Figure(figsize=(10, 10), dpi=100)
         plt = fig.add_subplot(111)
 

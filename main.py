@@ -4,7 +4,7 @@ from SVRRegressor import SVRRegressor
 from SimpleLinearRegressor import SimpleLinearRegressor
 from DecisionTreeRegressor import DecisionTreeRegressor
 from RandomForestRegressor import RandomForestRegressor
-
+from Controller import Controller
 
 def test_simple_linear():
     simpleR = SimpleLinearRegressor("Salary_Data.csv", 1)
@@ -126,13 +126,19 @@ def test_average_error():
     regressor.remove_variable(0)
     print(regressor.get_average_error())
 
+def test_best_regressor():
+    controller = Controller()
+    regressor = controller.get_best_regressor("Position_Salaries.csv", 2)
+    print(regressor.name)
 
 if __name__ == "__main__":
-    test_simple_linear()
+    #test_simple_linear()
     test_polinomial_linear()
-    test_svr()
-    test_decision_t()
-    test_random_forest()
+    #test_svr()
+    #test_decision_t()
+    #test_random_forest()
+    #test_best_regressor()
+
 #test_average_error()
     """val = 13
     regressor = Regressor("Position_Salaries.csv", 2)

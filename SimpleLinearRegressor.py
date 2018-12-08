@@ -5,6 +5,7 @@ class SimpleLinearRegressor(Regressor):
 
     def __init__(self, dataset, y_index, header=False):
         super(SimpleLinearRegressor, self).__init__(dataset, y_index)
+        self.name = "Simple Linear Regressor"
 
     def train(self):
         from sklearn.linear_model import LinearRegression
