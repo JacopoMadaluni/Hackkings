@@ -34,6 +34,8 @@ map = None
 choices = []
 current_y = 0
 
+predictionPoints = StringVar()
+
 def UploadAction(event=None):
     print("what is happening")
     file = filedialog.askopenfilename()
@@ -73,9 +75,36 @@ def set_best_regressor():
         pass
 
 def predict_test():
+    print(predictionPoints.get())
     regressor.predict_test()
     plot = FigureCanvasTkAgg(regressor.get_plot(), main)
     plot.get_tk_widget().pack()
+
+def predict_window():
+    global predictionPoints
+    x = root.winfo_x()
+    y = root.winfo_y()
+
+    top = Toplevel(bg = cBackground)
+    top.title("Predict")
+    top.minsize(350, 200)
+    top.geometry("%dx%d+%d+%d" % (350, 200, x + 375, y + 200))
+    top.resizable(0,0)
+
+    xInput = Label(top, text = "X = ", bg = cBackground, fg="white", borderwidth=0)
+    xInput.config(font = font)
+    xInput.place(x= 100, y= 80)
+
+    box1 = Entry(top, textvariable = predictionPoints).place(x=140, y=80)
+
+    predict = Button(top, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_test)
+    predict.config(font = font)
+    predict.place(x=260, y=150)
+
+    dismiss = Button(top, text="Dismiss", bg=cButtons, fg="white", borderwidth=0, command=top.destroy)
+    dismiss.config(font = font)
+    dismiss.place(x=160, y=150)
+
 
 def test_plot():
     if regressor:
@@ -170,17 +199,21 @@ content.config(bg = "Black")
 navbar = PanedWindow()
 navbar.config(bg = cBackground, height = 70)
 
-statusLabel = Label(navbar, text = "ESKETIT", bg = cBackground, fg = "White", borderwidth=0)
+statusLabel = Label(navbar, text = "Machine Learning", bg = cBackground, fg = "White", borderwidth=0)
 statusLabel.config(font = font)
-statusLabel.place(x= 500, y=20)
+statusLabel.place(x= 300, y=20)
 
-predictButton = Button(navbar, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_test)
+predictButton = Button(navbar, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_window)
 predictButton.config(font = font)
 predictButton.place(x= 50, y=14)
 
 plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0, command = plot)
 plotButton.config(font = font)
 plotButton.place(x= 150, y=14)
+
+presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0)
+presentationButton.config(font = font)
+presentationButton.place(x= 560, y=14)
 
 main = PanedWindow()
 main.config(bg = cBackground)
