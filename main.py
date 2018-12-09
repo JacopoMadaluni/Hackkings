@@ -48,12 +48,6 @@ def test_polinomial_linear():
     regressor.plot()
     print(regressor.get_average_error())
 
-    regressor = PolynomialLinearRegressor("top_5000_comp.csv", 6)
-    regressor.remove_variable(1)
-    regressor.remove_variable(2)
-    regressor.remove_variable(3)
-    regressor.train()
-    print(regressor.get_average_error())
     #regressor.plot_initial_regression()
 
 def test_svr():
@@ -131,13 +125,14 @@ def test_best_regressor():
     regressor = controller.get_best_regressor("Position_Salaries.csv", 2)
     print(regressor.name)
 
+class 
+
 if __name__ == "__main__":
-    #test_simple_linear()
+    test_simple_linear()
     test_polinomial_linear()
     #test_svr()
-    #test_decision_t()
-    #test_random_forest()
-    #test_best_regressor()
+    test_decision_t()
+    test_random_forest()
 
 #test_average_error()
     """val = 13

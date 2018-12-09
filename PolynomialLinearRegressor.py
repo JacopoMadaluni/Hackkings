@@ -39,7 +39,7 @@ class PolynomialLinearRegressor(Regressor):
             count += 1
         return error/count
 
-    def plot(self):
+    def get_plot(self):
         if len(self.current_test) == 0 or len(self.current_result) == 0:
             print("No value has been asked to predict")
             return
@@ -59,6 +59,22 @@ class PolynomialLinearRegressor(Regressor):
         plt.set_ylabel("y label pls")
         return fig
         #plt.show()
+
+    def plot(self):
+        if len(self.current_test) == 0 or len(self.current_result) == 0:
+            print("No value has been asked to predict")
+            return
+        print(self.current_test)
+        if len(self.current_test[0]) > 1:
+            print("YO, Can't plot multivariable dataset!")
+            return
+
+        plt.scatter(self.X_train, self.y_train, color = 'red')
+        plt.plot(self.current_test, self.current_result, color = 'blue')
+        plt.title("Title pls")
+        plt.xlabel("x label pls")
+        plt.ylabel("y label pls")
+        plt.show()
 
     def plot_initial_regression(self):
         test = [_ for _ in self.X]

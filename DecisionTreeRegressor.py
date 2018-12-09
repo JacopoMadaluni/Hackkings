@@ -33,7 +33,7 @@ class DecisionTreeRegressor(Regressor):
             count += 1
         return error/count
 
-    def plot(self):
+    def get_plot(self):
         if len(self.current_test) == 0 or len(self.current_result) == 0:
             print("No value has been asked to predict")
             return
@@ -51,3 +51,21 @@ class DecisionTreeRegressor(Regressor):
         plt.set_ylabel("y label pls")
         return fig
         #plt.show()
+
+    def plot(self):
+        if len(self.current_test) == 0 or len(self.current_result) == 0:
+            print("No value has been asked to predict")
+            return
+        print(self.current_test)
+        if len(self.current_test[0]) > 1:
+            print("YO, Can't plot multivariable dataset!")
+            fig = Figure(figsize=(10, 10), dpi=100)
+            plt = fig.add_subplot(111)
+            return fig
+
+        plt.scatter(self.X, self.y, color = 'red')
+        plt.plot(self.current_test, self.current_result, color = 'blue')
+        plt.title("Title pls")
+        plt.xlabel("x label pls")
+        plt.ylabel("y label pls")
+        plt.show()

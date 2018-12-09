@@ -35,14 +35,16 @@ class RandomForestRegressor(Regressor):
             count += 1
         return error/count
 
-    def plot(self):
+    def get_plot(self):
         if len(self.current_test) == 0 or len(self.current_result) == 0:
             print("No value has been asked to predict")
             return
         print(self.current_test)
         if len(self.current_test[0]) > 1:
             print("YO, Can't plot multivariable dataset!")
-            return
+            fig = Figure(figsize=(10, 10), dpi=100)
+            plt = fig.add_subplot(111)
+            return fig
         fig = Figure(figsize=(10, 10), dpi=100)
         plt = fig.add_subplot(111)
 
@@ -54,11 +56,18 @@ class RandomForestRegressor(Regressor):
         return fig
         #plt.show()
 
-    def plot2(self):
-        X_grid = np.arange(min(self.current_test), max(self.current_test), 0.01)
-        X_grid = X_grid.reshape(len(X_grid), 1)
+    def plot(self):
+        if len(self.current_test) == 0 or len(self.current_result) == 0:
+            print("No value has been asked to predict")
+            return
+        print(self.current_test)
+        if len(self.current_test[0]) > 1:
+            print("YO, Can't plot multivariable dataset!")
+            return
 
-        plt.scatter(self.X, self.y, color = "red")
-        plt.plot(X_grid, self.regressor.predict(X_grid), color = "blue")
-        plt.title("Random forest Prediction")
+        plt.scatter(self.X_train, self.y_train, color = 'red')
+        plt.plot(self.current_test, self.current_result, color = 'blue')
+        plt.title("Title pls")
+        plt.xlabel("x label pls")
+        plt.ylabel("y label pls")
         plt.show()

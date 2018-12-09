@@ -74,7 +74,7 @@ def set_best_regressor():
 
 def predict_test():
     regressor.predict_test()
-    plot = FigureCanvasTkAgg(regressor.plot(), main)
+    plot = FigureCanvasTkAgg(regressor.get_plot(), main)
     plot.get_tk_widget().pack()
 
 def test_plot():
@@ -82,7 +82,7 @@ def test_plot():
         #regressor.train()
         regressor.predict([1],[2],[3],[4],[5],[6],[7],[8],[9], [10],[11])
         print(regressor.name)
-        return regressor.plot()
+        return regressor.get_plot()
 
 def plot():
     print("Plotting")
