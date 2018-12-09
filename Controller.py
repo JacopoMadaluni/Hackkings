@@ -24,6 +24,8 @@ class Controller:
     def add_to_ignore(self, index, reader):
         if len(self.to_ignore) + 2 >= len(reader.get_headers_names()):
             print("you need at least 2 variables")
+        elif index == self.y_index:
+            print("you can't ignore y values")
         else:
             if not self.to_ignore:
                 self.to_ignore.append(index)
