@@ -46,7 +46,7 @@ def run_presentation():
 
 def UploadAction(event=None):
     print("what is happening")
-    file = filedialog.askopenfilename()
+    file = filedialog.askopenfilename(filetypes = (("csv files","*.csv"),("all files","*.*")))
     filename.set(file)
     print('Selected:', file)
     controller.set_file(file)
@@ -72,6 +72,7 @@ def set_y_to_controller():
 
 def ignore_variable():
     message = controller.add_to_ignore(current_y, reader)
+    choices.remove(reader.headers_dict.get(current_y))
     if len(message) != 0:
         errorMessage(message)
     init_choices_panel()
@@ -86,7 +87,9 @@ def set_best_regressor():
         pass
 
 def predict_inputs():
-    result = regressor.predict(*predict_inputs)
+    print(prediction_inputs)
+    args = [str(s) for s in prediction_inputs]
+    result = regressor.predict(*[args])
     status_text = "Result: {}".format(result)
 
 def predict_test():
@@ -111,14 +114,14 @@ def predict_window():
     box_x = 140
     starting_y = 20;
     for i, header in enumerate(choices):
+        if reader.headers_dict.get(i) != reader.headers_dict.get(current_y):
+            xLabel = Label(top, text = header, bg = cBackground, fg="white", borderwidth=0)
+            xLabel.config(font = font)
+            xLabel.place(x= label_x, y= starting_y + i*30)
 
-        xLabel = Label(top, text = header, bg = cBackground, fg="white", borderwidth=0)
-        xLabel.config(font = font)
-        xLabel.place(x= label_x, y= starting_y + i*30)
-
-        box = Entry(top, textvariable = prediction_inputs[i])
-        box.place(x=box_x, y = starting_y + i*30)
-        prediction_inputs.append(box)
+            box = Entry(top, textvariable = prediction_inputs[i])
+            box.place(x=box_x, y = starting_y + i*30)
+            prediction_inputs.append(box)
 
     predict = Button(top, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_inputs)
     predict.config(font = font)
@@ -184,13 +187,14 @@ importButton.place(x= 90, y= 350)
 tkvar = StringVar(root)
 
 def init_choices_panel():
-    if (len(choices) > 2):
-        for e in controller.to_ignore:
-            choices.remove(reader.headers_dict.get(e))
-            controller.to_ignore.remove(e)
-        tkvar.set(choices[0])
-    else:
-        errorMessage("Can't remove any more variables, needs at least 2")
+    #if (len(choices) > 2):
+#        for e in controller.to_ignore:
+    #        if e in choices:
+    #            choices.remove(reader.headers_dict.get(e))
+            #controller.to_ignore.remove(e)
+    tkvar.set(choices[0])
+    #else:
+    #    errorMessage("Can't remove any more variables, needs at least 2")
     popupMenu = OptionMenu(leftMenu, tkvar, *choices,).place(x= 60, y= 260)
 
 # on change dropdown value
