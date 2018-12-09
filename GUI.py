@@ -9,6 +9,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from RandomForestRegressor import RandomForestRegressor
 from Controller import Controller
 from Reader import Reader
+from Presentation import start_presentation
 
 
 
@@ -33,8 +34,13 @@ regressor = None
 map = None
 choices = []
 current_y = 0
+prediction_inputs = []
+status_text = "Result: "
 
 predictionPoints = StringVar()
+
+def run_presentation():
+    start_presentation()
 
 def UploadAction(event=None):
     print("what is happening")
@@ -74,6 +80,10 @@ def set_best_regressor():
         # display error plot
         pass
 
+def predict_inputs():
+    result = regressor.predict(*predict_inputs)
+    status_text = "Result: {}".format(result)
+
 def predict_test():
     print(predictionPoints.get())
     regressor.predict_test()
@@ -81,7 +91,8 @@ def predict_test():
     plot.get_tk_widget().pack()
 
 def predict_window():
-    global predictionPoints
+    global prediction_inputs
+    prediction_inputs = ["" for _ in range(len(choices))]
     x = root.winfo_x()
     y = root.winfo_y()
 
@@ -91,13 +102,20 @@ def predict_window():
     top.geometry("%dx%d+%d+%d" % (350, 200, x + 375, y + 200))
     top.resizable(0,0)
 
-    xInput = Label(top, text = "X = ", bg = cBackground, fg="white", borderwidth=0)
-    xInput.config(font = font)
-    xInput.place(x= 100, y= 80)
+    label_x = 50
+    box_x = 140
+    starting_y = 20;
+    for i, header in enumerate(choices):
 
-    box1 = Entry(top, textvariable = predictionPoints).place(x=140, y=80)
+        xLabel = Label(top, text = header, bg = cBackground, fg="white", borderwidth=0)
+        xLabel.config(font = font)
+        xLabel.place(x= label_x, y= starting_y + i*30)
 
-    predict = Button(top, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_test)
+        box = Entry(top, textvariable = prediction_inputs[i])
+        box.place(x=box_x, y = starting_y + i*30)
+        prediction_inputs.append(box)
+
+    predict = Button(top, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_inputs)
     predict.config(font = font)
     predict.place(x=260, y=150)
 
@@ -199,7 +217,7 @@ content.config(bg = "Black")
 navbar = PanedWindow()
 navbar.config(bg = cBackground, height = 70)
 
-statusLabel = Label(navbar, text = "Machine Learning", bg = cBackground, fg = "White", borderwidth=0)
+statusLabel = Label(navbar, text = status_text, bg = cBackground, fg = "White", borderwidth=0)
 statusLabel.config(font = font)
 statusLabel.place(x= 300, y=20)
 
@@ -211,7 +229,7 @@ plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0,
 plotButton.config(font = font)
 plotButton.place(x= 150, y=14)
 
-presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0)
+presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0, command=run_presentation)
 presentationButton.config(font = font)
 presentationButton.place(x= 560, y=14)
 

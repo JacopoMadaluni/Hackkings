@@ -39,7 +39,9 @@ class SimpleLinearRegressor(Regressor):
         print(self.current_test)
         if len(self.current_test[0]) > 1:
             print("YO, Can't plot multivariable dataset!")
-            return
+            fig = Figure(figsize=(10, 10), dpi=100)
+            plt = fig.add_subplot(111)
+            return fig
         fig = Figure(figsize=(10, 10), dpi=100)
         plt = fig.add_subplot(111)
 
@@ -58,9 +60,7 @@ class SimpleLinearRegressor(Regressor):
         print(self.current_test)
         if len(self.current_test[0]) > 1:
             print("YO, Can't plot multivariable dataset!")
-            fig = Figure(figsize=(10, 10), dpi=100)
-            plt = fig.add_subplot(111)
-            return fig
+            return
 
         plt.scatter(self.X_train, self.y_train, color = 'red')
         plt.plot(self.current_test, self.current_result, color = 'blue')
