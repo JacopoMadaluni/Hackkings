@@ -11,6 +11,7 @@ class Controller:
     def __init__(self):
         self.file = ""
         self.y_index = -1
+        self.to_ignore = []
 
     def get_all_regressors(self, dataset, y_index):
         sl = SimpleLinearRegressor(dataset, y_index)
@@ -19,10 +20,15 @@ class Controller:
         rf = RandomForestRegressor(dataset, y_index)
         return [sl, pl, dt, rf]
 
-
+    def add_to_ignore(self, index):
+        self.to_ignore.append(index)
 
     def get_choices(self, dataset):
         pass
+
+    def remove_toignore_from(self, regressor):
+        for i in self.to_ignore:
+            regressor.remove_variable(i)
 
     def get_best_regressor(self):
         if self.file == "" or self.y_index == -1:
@@ -32,6 +38,7 @@ class Controller:
         min_error = 10000000000
         current_best = None
         for regressor in regressors:
+            remove_toignore_from(regressor)
             error = regressor.get_average_error()
             if (error < min_error):
                 min_error = error

@@ -8,6 +8,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from RandomForestRegressor import RandomForestRegressor
 from Controller import Controller
+from Reader import Reader
 
 
 
@@ -27,17 +28,40 @@ root.resizable(0,0)
 
 filename = StringVar()
 controller = Controller()
+reader = None
 regressor = None
+map = None
+choices = []
+current_y = 0
 
 def UploadAction(event=None):
+    print("what is happening")
     file = filedialog.askopenfilename()
     filename.set(file)
     print('Selected:', file)
     controller.set_file(file)
-    controller.set_y_index(1)
+
+    global reader
+    reader = Reader(file)
+    set_map()
+    set_choices()
+
+def set_map():
+    map = reader.headers_dict
+
+def set_choices():
+    global choices
+    choices = reader.get_headers_names()
+    init_choices_panel()
 
 def quit():
     root.destroy()
+
+def set_y_to_controller():
+    controller.set_y_index(current_y)
+
+def ignore_variable():
+    controller.add_to_ignore(current_y)
 
 def set_best_regressor():
     global regressor
@@ -89,18 +113,29 @@ dependantLabel = Label(leftMenu, text = "Dependent Var = ", bg = cBackground, fg
 dependantLabel.config(font = font)
 dependantLabel.place(x= 25, y= 220)
 
+#importButton = Button(leftMenu, text="Set Y", bg=cButtons, fg="white", borderwidth=0, command=set_y_to_controller )
+#importButton.config(font = font)
+#importButton.place(x= 15, y= 350)
+
+#importButton = Button(leftMenu, text="Ignore", bg=cButtons, fg="white", borderwidth=0, command=ignore_variable )
+#importButton.config(font = font)
+#importButton.place(x= 90, y= 350)
+
 
 tkvar = StringVar(root)
 
+def init_choices_panel():
 # Dictionary with options
-choices = { 'Pizza','Lasagne','Fries','Fish','Potatoe'}
-tkvar.set('Pizza') # set the default option
-
-popupMenu = OptionMenu(leftMenu, tkvar, *choices,).place(x= 60, y= 260)
+    #choices = { 'Pizza','Lasagne','Fries','Fish','Potatoe'}
+    #tkvar.set('Pizza') # set the default option
+    tkvar.set(choices[0])
+    popupMenu = OptionMenu(leftMenu, tkvar, *choices,).place(x= 60, y= 260)
 
 # on change dropdown value
 def change_dropdown(*args):
     #controller.set_y_index(dic.get(tkvar.get))
+    global current_y
+    current_y = reader.get_header_col(tkvar.get())
     print( tkvar.get() )
 
 # link function to change dropdown
