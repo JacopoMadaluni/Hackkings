@@ -47,9 +47,9 @@ class SimpleLinearRegressor(Regressor):
 
         plt.scatter(self.X_train, self.y_train, color = 'red')
         plt.plot(self.current_test, self.current_result, color = 'blue')
-        plt.set_title("Title pls")
-        plt.set_xlabel("x label pls")
-        plt.set_ylabel("y label pls")
+        plt.set_title(self.name)
+        plt.set_xlabel("Independet Variable")
+        plt.set_ylabel("Dependent Variable")
         return fig
         #plt.show()
 
@@ -64,9 +64,9 @@ class SimpleLinearRegressor(Regressor):
 
         plt.scatter(self.X_train, self.y_train, color = 'red')
         plt.plot(self.current_test, self.current_result, color = 'blue')
-        plt.title("Title pls")
-        plt.xlabel("x label pls")
-        plt.ylabel("y label pls")
+        plt.title("Simple Linear Regressor")
+        plt.xlabel("Independet Variable")
+        plt.ylabel("Dependent Variable")
         plt.show()
 
     def scatter_tests(self):
@@ -79,7 +79,7 @@ class SimpleLinearRegressor(Regressor):
             return
 
         plt.scatter(self.X_train, self.y_train, color = 'red')
-        plt.title("Title pls")
-        plt.xlabel("x label pls")
-        plt.ylabel("y label pls")
-        plt.show()    
+        plt.title("Scatter Plot")
+        plt.xlabel("Independet Variable")
+        plt.ylabel("Dependent Variable")
+        plt.show()
