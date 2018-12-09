@@ -24,7 +24,7 @@ cButtons = "#424B54"
 #font = Font(family = "Helvetica Neue", size = 20, weight = "bold")
 
 root = Tk()
-root.title("Gucci")
+root.title("General Regressor")
 root.minsize(900, 550)
 root.geometry("900x550+0+0")
 root.resizable(0,0)
