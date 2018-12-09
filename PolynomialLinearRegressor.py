@@ -83,6 +83,21 @@ class PolynomialLinearRegressor(Regressor):
         self.predict(*test)
         self.plot()
 
+    def scatter_tests(self):
+        if len(self.current_test) == 0 or len(self.current_result) == 0:
+            print("No value has been asked to predict")
+            return
+        print(self.current_test)
+        if len(self.current_test[0]) > 1:
+            print("YO, Can't plot multivariable dataset!")
+            return
+
+        plt.scatter(self.X_train, self.y_train, color = 'red')
+        plt.title("Title pls")
+        plt.xlabel("x label pls")
+        plt.ylabel("y label pls")
+        plt.show()    
+
 
         #print("X = {}\n Y = {}".format(len(self.X), len(self.y)))
 

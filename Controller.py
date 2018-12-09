@@ -16,9 +16,9 @@ class Controller:
     def get_all_regressors(self, dataset, y_index):
         sl = SimpleLinearRegressor(dataset, y_index)
         pl = PolynomialLinearRegressor(dataset, y_index)
-        dt = DecisionTreeRegressor(dataset, y_index)
+        #dt = DecisionTreeRegressor(dataset, y_index)
         rf = RandomForestRegressor(dataset, y_index)
-        return [sl, pl, dt, rf]
+        return [sl, pl, rf]
 
     def add_to_ignore(self, index, reader):
         message = ""
@@ -52,6 +52,9 @@ class Controller:
             if (error < min_error):
                 min_error = error
                 current_best = regressor
+        if current_best is None:
+            print("Didn't find decent dataset, returning the best result.")
+            return regressors[2]        
         return current_best
 
     def set_file(self, file):

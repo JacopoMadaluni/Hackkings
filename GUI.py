@@ -30,6 +30,7 @@ root.geometry("900x550+0+0")
 root.resizable(0,0)
 
 filename = StringVar()
+
 controller = Controller()
 reader = None
 regressor = None
@@ -38,8 +39,9 @@ choices = []
 current_y = 0
 prediction_inputs = []
 status_text = "Result: "
+result_var = StringVar()
+result_var.set(status_text)
 
-predictionPoints = StringVar()
 
 def run_presentation():
     start_presentation()
@@ -63,6 +65,9 @@ def set_choices():
     global choices
     choices = reader.get_headers_names()
     init_choices_panel()
+
+def scatter():
+    regressor.scatter_tests()
 
 def quit():
     root.destroy()
@@ -88,9 +93,10 @@ def set_best_regressor():
 
 def predict_inputs():
     print(prediction_inputs)
-    args = [str(s) for s in prediction_inputs]
+    args = [float(s.get()) for s in prediction_inputs]
     result = regressor.predict(*[args])
     status_text = "Result: {}".format(result)
+    result_var.set("Result: {}".format(result))
 
 def predict_test():
     print(predictionPoints.get())
@@ -100,7 +106,7 @@ def predict_test():
 
 def predict_window():
     global prediction_inputs
-    prediction_inputs = ["" for _ in range(len(choices))]
+    prediction_inputs = [StringVar() for _ in range(len(choices) - 1)]
     x = root.winfo_x()
     y = root.winfo_y()
 
@@ -110,18 +116,18 @@ def predict_window():
     top.geometry("%dx%d+%d+%d" % (350, 200, x + 375, y + 200))
     top.resizable(0,0)
 
-    label_x = 50
-    box_x = 140
+    label_x = 10
+    box_x = 208
     starting_y = 20;
     for i, header in enumerate(choices):
-        if reader.headers_dict.get(i) != reader.headers_dict.get(current_y):
+        if header != reader.headers_dict.get(current_y):
             xLabel = Label(top, text = header, bg = cBackground, fg="white", borderwidth=0)
             xLabel.config(font = font)
             xLabel.place(x= label_x, y= starting_y + i*30)
 
             box = Entry(top, textvariable = prediction_inputs[i])
             box.place(x=box_x, y = starting_y + i*30)
-            prediction_inputs.append(box)
+            #prediction_inputs.append(box)
 
     predict = Button(top, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_inputs)
     predict.config(font = font)
@@ -141,7 +147,8 @@ def test_plot():
 
 def plot():
     print("Plotting")
-    plot = FigureCanvasTkAgg(test_plot(), main)
+    regressor.predict_test()
+    plot = FigureCanvasTkAgg(regressor.plot(), main)
     plot.get_tk_widget().pack()
 
 def errorMessage(error):
@@ -232,7 +239,7 @@ content.config(bg = "Black")
 navbar = PanedWindow()
 navbar.config(bg = cBackground, height = 70)
 
-statusLabel = Label(navbar, text = status_text, bg = cBackground, fg = "White", borderwidth=0)
+statusLabel = Label(navbar, textvariable = result_var, bg = cBackground, fg = "White", borderwidth=0)
 statusLabel.config(font = font)
 statusLabel.place(x= 300, y=20)
 
@@ -243,6 +250,11 @@ predictButton.place(x= 50, y=14)
 plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0, command = plot)
 plotButton.config(font = font)
 plotButton.place(x= 150, y=14)
+
+
+scatterButton = Button(navbar, text="Scatter", bg=cButtons, fg="white", borderwidth=0, command = scatter)
+scatterButton.config(font = font)
+scatterButton.place(x= 200, y=14)
 
 presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0, command=run_presentation)
 presentationButton.config(font = font)

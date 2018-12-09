@@ -48,8 +48,9 @@ class RandomForestRegressor(Regressor):
         fig = Figure(figsize=(10, 10), dpi=100)
         plt = fig.add_subplot(111)
 
-        plt.scatter(self.X_train, self.y_train, color = 'red')
+
         plt.plot(self.current_test, self.current_result, color = 'blue')
+        plt.scatter(self.X_train, self.y_train, color = 'red')
         plt.set_title("Title pls")
         plt.set_xlabel("x label pls")
         plt.set_ylabel("y label pls")
@@ -67,6 +68,21 @@ class RandomForestRegressor(Regressor):
 
         plt.scatter(self.X_train, self.y_train, color = 'red')
         plt.plot(self.current_test, self.current_result, color = 'blue')
+        plt.title("Title pls")
+        plt.xlabel("x label pls")
+        plt.ylabel("y label pls")
+        plt.show()
+
+    def scatter_tests(self):
+        if len(self.current_test) == 0 or len(self.current_result) == 0:
+            print("No value has been asked to predict")
+            return
+        print(self.current_test)
+        if len(self.current_test[0]) > 1:
+            print("YO, Can't plot multivariable dataset!")
+            return
+
+        plt.scatter(self.X_train, self.y_train, color = 'red')
         plt.title("Title pls")
         plt.xlabel("x label pls")
         plt.ylabel("y label pls")
