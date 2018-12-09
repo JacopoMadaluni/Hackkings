@@ -11,6 +11,8 @@ from Controller import Controller
 from Reader import Reader
 from Presentation import start_presentation
 
+from tkinter import messagebox
+
 
 
 
@@ -31,7 +33,7 @@ filename = StringVar()
 controller = Controller()
 reader = None
 regressor = None
-map = None
+header_map = None
 choices = []
 current_y = 0
 prediction_inputs = []
@@ -55,7 +57,7 @@ def UploadAction(event=None):
     set_choices()
 
 def set_map():
-    map = reader.headers_dict
+    header_map = reader.headers_dict
 
 def set_choices():
     global choices
@@ -69,7 +71,10 @@ def set_y_to_controller():
     controller.set_y_index(current_y)
 
 def ignore_variable():
-    controller.add_to_ignore(current_y, reader)
+    message = controller.add_to_ignore(current_y, reader)
+    if len(message) != 0:
+        errorMessage(message)
+    init_choices_panel()
 
 def set_best_regressor():
     global regressor
@@ -136,6 +141,9 @@ def plot():
     plot = FigureCanvasTkAgg(test_plot(), main)
     plot.get_tk_widget().pack()
 
+def errorMessage(error):
+    messagebox.showerror("Error", error)
+
 window = PanedWindow(orient=HORIZONTAL)
 window.config(bg = "Black")
 
@@ -176,10 +184,13 @@ importButton.place(x= 90, y= 350)
 tkvar = StringVar(root)
 
 def init_choices_panel():
-# Dictionary with options
-    #choices = { 'Pizza','Lasagne','Fries','Fish','Potatoe'}
-    #tkvar.set('Pizza') # set the default option
-    tkvar.set(choices[0])
+    if (len(choices) > 2):
+        for e in controller.to_ignore:
+            choices.remove(reader.headers_dict.get(e))
+            controller.to_ignore.remove(e)
+        tkvar.set(choices[0])
+    else:
+        errorMessage("Can't remove any more variables, needs at least 2")
     popupMenu = OptionMenu(leftMenu, tkvar, *choices,).place(x= 60, y= 260)
 
 # on change dropdown value
@@ -187,7 +198,7 @@ def change_dropdown(*args):
     #controller.set_y_index(dic.get(tkvar.get))
     global current_y
     current_y = reader.get_header_col(tkvar.get())
-    print( tkvar.get() )
+    #print( tkvar.get() )
 
 # link function to change dropdown
 tkvar.trace('w', change_dropdown)

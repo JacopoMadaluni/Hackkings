@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
+from Reader import Reader
+
+
 class Regressor:
 
     def __init__(self, dataset, y_index, header=False):
@@ -21,10 +24,19 @@ class Regressor:
         self.dataset = pd.read_csv(dataset)
         self.X = self.dataset.iloc[:, 0 :].values
         self.X = np.delete(self.X, y_index, 1)
+
+        """reader = Reader(dataset)
+        self.dataset = reader.dataset
+        reader.set_Y(y_index)
+        self.X = reader.get_x_matrix()"""
+        self.reader = Reader(dataset)
         self.encode()
 
 
+
         self.y = self.dataset.iloc[:, y_index].values
+        #self.y = reader.get_y_matrix()
+        #print("this is self.y{}".format(self.y))
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size = 0.2, random_state = 0)
         self.regressor = None
 

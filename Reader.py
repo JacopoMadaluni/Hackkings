@@ -129,7 +129,3 @@ class Reader:
 
     def get_x_matrix(self):
         return self.x_matrix
-
-some = Reader("50_Startups.csv")
-print(some.headers_dict)
-print(some.get_headers_names())
