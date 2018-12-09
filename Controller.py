@@ -20,20 +20,19 @@ class Controller:
         rf = RandomForestRegressor(dataset, y_index)
         return [sl, pl, dt, rf]
 
-    def add_to_ignore(self, index):
-        if not self.to_ignore:
-            self.to_ignore.append(index)
+
+    def add_to_ignore(self, index, reader):
+        if len(self.to_ignore) + 2 >= len(reader.get_headers_names()):
+            print("you need at least 2 variables")
         else:
-            added = False
-            for i, e in enumerate(self.to_ignore):
-                print("lmao")
-                if e > index:
-                    self.to_ignore.insert(i, index)
-                    added = True
-                    break
-            if not added:
-                self.to_ignore.insert(0, index)
-            print(self.to_ignore)
+            if not self.to_ignore:
+                self.to_ignore.append(index)
+            else:
+                if index not in self.to_ignore:
+                    self.to_ignore.append(index)
+                    self.to_ignore.sort(reverse=True)
+
+        print(self.to_ignore)
 
     def get_choices(self, dataset):
         pass

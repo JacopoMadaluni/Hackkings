@@ -61,7 +61,7 @@ def set_y_to_controller():
     controller.set_y_index(current_y)
 
 def ignore_variable():
-    controller.add_to_ignore(current_y)
+    controller.add_to_ignore(current_y, reader)
 
 def set_best_regressor():
     global regressor
