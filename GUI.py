@@ -65,7 +65,9 @@ def set_y_to_controller():
     controller.set_y_index(current_y)
 
 def ignore_variable():
-    controller.add_to_ignore(current_y, reader)
+    message = controller.add_to_ignore(current_y, reader)
+    if len(message) != 0:
+        errorMessage(message)
     init_choices_panel()
 
 def set_best_regressor():
@@ -124,7 +126,6 @@ def plot():
 def errorMessage(error):
     messagebox.showerror("Error", error)
 
-
 window = PanedWindow(orient=HORIZONTAL)
 window.config(bg = "Black")
 
@@ -171,7 +172,7 @@ def init_choices_panel():
             controller.to_ignore.remove(e)
         tkvar.set(choices[0])
     else:
-        print("you need at least 2 values")
+        errorMessage("Can't remove any more variables, needs at least 2")
     popupMenu = OptionMenu(leftMenu, tkvar, *choices,).place(x= 60, y= 260)
 
 # on change dropdown value
@@ -220,10 +221,6 @@ predictButton.place(x= 50, y=14)
 plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0, command = plot)
 plotButton.config(font = font)
 plotButton.place(x= 150, y=14)
-
-presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0, command = errorMessage("lOLOLOLLOLOLOLOLOLOLOL"))
-presentationButton.config(font = font)
-presentationButton.place(x= 560, y=14)
 
 main = PanedWindow()
 main.config(bg = cBackground)
