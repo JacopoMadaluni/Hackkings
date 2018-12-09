@@ -20,7 +20,7 @@ class Reader:
         self.dataset = self.load_file()
         self.headers_dict = defaultdict(str)
         self.get_headers()
-        """print(self.dataset)
+        """
         self.encode_dict = defaultdict(list)
         self.encode_strings()
         self.y_matrix = [[]]

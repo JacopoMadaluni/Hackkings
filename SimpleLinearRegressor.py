@@ -12,6 +12,11 @@ class SimpleLinearRegressor(Regressor):
         self.regressor = LinearRegression()
         self.regressor.fit(self.X_train, self.y_train)
 
+    def predict_test(self):
+        self.current_test = self.X_test
+        self.current_result = self.regressor.predict(self.X_test)
+        return self.current_result
+
     def predict(self, *args, **kwargs):
         self.current_test = args
         self.current_result = self.regressor.predict(args)

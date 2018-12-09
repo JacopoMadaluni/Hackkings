@@ -72,10 +72,14 @@ def set_best_regressor():
         # display error plot
         pass
 
+def predict_test():
+    regressor.predict_test()
+    plot = FigureCanvasTkAgg(regressor.plot(), main)
+    plot.get_tk_widget().pack()
 
 def test_plot():
     if regressor:
-        regressor.train()
+        #regressor.train()
         regressor.predict([1],[2],[3],[4],[5],[6],[7],[8],[9], [10],[11])
         print(regressor.name)
         return regressor.plot()
@@ -113,13 +117,13 @@ dependantLabel = Label(leftMenu, text = "Dependent Var = ", bg = cBackground, fg
 dependantLabel.config(font = font)
 dependantLabel.place(x= 25, y= 220)
 
-#importButton = Button(leftMenu, text="Set Y", bg=cButtons, fg="white", borderwidth=0, command=set_y_to_controller )
-#importButton.config(font = font)
-#importButton.place(x= 15, y= 350)
+importButton = Button(leftMenu, text="Set Y", bg=cButtons, fg="white", borderwidth=0, command=set_y_to_controller )
+importButton.config(font = font)
+importButton.place(x= 15, y= 350)
 
-#importButton = Button(leftMenu, text="Ignore", bg=cButtons, fg="white", borderwidth=0, command=ignore_variable )
-#importButton.config(font = font)
-#importButton.place(x= 90, y= 350)
+importButton = Button(leftMenu, text="Ignore", bg=cButtons, fg="white", borderwidth=0, command=ignore_variable )
+importButton.config(font = font)
+importButton.place(x= 90, y= 350)
 
 
 tkvar = StringVar(root)
@@ -170,7 +174,7 @@ statusLabel = Label(navbar, text = "ESKETIT", bg = cBackground, fg = "White", bo
 statusLabel.config(font = font)
 statusLabel.place(x= 500, y=20)
 
-predictButton = Button(navbar, text="Predict", bg=cButtons, fg="white", borderwidth=0)
+predictButton = Button(navbar, text="Predict", bg=cButtons, fg="white", borderwidth=0, command=predict_test)
 predictButton.config(font = font)
 predictButton.place(x= 50, y=14)
 
