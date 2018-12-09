@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Mar 27 01:30:48 2018
-
-@author: Jaco
-"""
 
 # Decision Tree Regression
 # Disclaimer: this regression model is using a two dimension dataset.
