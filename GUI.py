@@ -10,6 +10,8 @@ from RandomForestRegressor import RandomForestRegressor
 from Controller import Controller
 from Reader import Reader
 
+from tkinter import messagebox
+
 
 
 
@@ -118,6 +120,10 @@ def plot():
     plot = FigureCanvasTkAgg(test_plot(), main)
     plot.get_tk_widget().pack()
 
+def errorMessage(error):
+    messagebox.showerror("Error", error)
+
+
 window = PanedWindow(orient=HORIZONTAL)
 window.config(bg = "Black")
 
@@ -211,7 +217,7 @@ plotButton = Button(navbar, text="Plot", bg=cButtons, fg="white", borderwidth=0,
 plotButton.config(font = font)
 plotButton.place(x= 150, y=14)
 
-presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0)
+presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0, command = errorMessage("lOLOLOLLOLOLOLOLOLOLOL"))
 presentationButton.config(font = font)
 presentationButton.place(x= 560, y=14)
 
