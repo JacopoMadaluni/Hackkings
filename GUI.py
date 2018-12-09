@@ -49,14 +49,18 @@ def run_presentation():
 def UploadAction(event=None):
     print("what is happening")
     file = filedialog.askopenfilename(filetypes = (("csv files","*.csv"),("all files","*.*")))
-    filename.set(file)
-    print('Selected:', file)
-    controller.set_file(file)
+    if file:
+        filename.set(file)
+        print('Selected:', file)
+        controller.set_file(file)
 
-    global reader
-    reader = Reader(file)
-    set_map()
-    set_choices()
+
+        global reader
+        reader = Reader(file)
+        set_map()
+        set_choices()
+        for widget in main.winfo_children():
+            widget.destroy()
 
 def set_map():
     header_map = reader.headers_dict
@@ -147,8 +151,8 @@ def test_plot():
 
 def plot():
     print("Plotting")
-    regressor.predict_test()
-    plot = FigureCanvasTkAgg(regressor.plot(), main)
+    #regressor.predict_test()
+    plot = FigureCanvasTkAgg(test_plot(), main)
     plot.get_tk_widget().pack()
 
 def errorMessage(error):
@@ -214,7 +218,7 @@ def change_dropdown(*args):
 # link function to change dropdown
 tkvar.trace('w', change_dropdown)
 
-startButton = Button(leftMenu, text="Start", bg=cButtons, fg="white", borderwidth=0, command=set_best_regressor)
+startButton = Button(leftMenu, text="Train", bg=cButtons, fg="white", borderwidth=0, command=set_best_regressor)
 startButton.place(x= 60, y= 400)
 startButton.config(font = font)
 #startButton.pack(padx=5, pady=5)
@@ -256,9 +260,6 @@ scatterButton = Button(navbar, text="Scatter", bg=cButtons, fg="white", borderwi
 scatterButton.config(font = font)
 scatterButton.place(x= 200, y=14)
 
-presentationButton = Button(navbar, text="Presentation", bg=cButtons, fg="white", borderwidth=0, command=run_presentation)
-presentationButton.config(font = font)
-presentationButton.place(x= 560, y=14)
 
 main = PanedWindow()
 main.config(bg = cBackground)
